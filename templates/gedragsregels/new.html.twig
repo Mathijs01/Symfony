@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Gedragsregels{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1>Create new Gedragsregels</h1>
+
+    {{ include('gedragsregels/_form.html.twig') }}
+
+        <button  style="margin-top: 10px" type="button" class="btn btn-info"><a style="text-decoration: none; color: white" href="{{ path('gedragsregels_index') }}">back to list</a></button>
+{#    <a href="{{ path('gedragsregels_index') }}">back to list</a>#}
+    </div>
+{% endblock %}

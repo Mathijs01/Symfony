@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Training{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <div class="container">
+    <h1>Create new Training</h1>
+
+    {{ include('training/_form.html.twig') }}
+
+        <button  style="margin-top: 10px" type="button" class="btn btn-info"><a style="text-decoration: none; color: white" href="{{ path('training_index') }}">back to list</a></button>
+    </div>
+    </div>
+{% endblock %}

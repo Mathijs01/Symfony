@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Training index{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1>Training index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+{#                <th>Id</th>#}
+                <th>Naam</th>
+                <th>Description</th>
+                <th>Duration</th>
+                <th>Costs</th>
+                <th>Delete</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for training in trainings %}
+            <tr>
+{#                <td>{{ training.id }}</td>#}
+                <td>{{ training.naam }}</td>
+                <td>{{ training.description }}</td>
+                <td>{{ training.duration ? training.duration|date('H:i:s') : '' }}</td>
+                <td>{{ training.costs }}</td>
+               <td> {{ include('training/_delete_form.html.twig') }}</td>
+                <td>
+                    <button type="button" class="btn btn-success"><a  style="text-decoration: none; color: white" href="{{ path('training_show', {'id': training.id}) }}">show</a></button>
+                    <button type="button" class="btn btn-warning"> <a style="text-decoration: none; color: white" href="{{ path('training_edit', {'id': training.id}) }}">edit</a></button>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        <button type="button" class="btn btn-info"><a style="text-decoration: none; color: white" href="{{ path('training_new') }}">Create new</a></button>
+
+    </div>
+{% endblock %}

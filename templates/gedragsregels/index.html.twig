@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gedragsregels{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Gedragsregels</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                {#                <th>Id</th>#}
+                <th>Regels</th>
+                <th>Verwijderen</th>
+                <th>Acties</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for gedragsregel in gedragsregels %}
+                <tr>
+                    {#                <td>{{ gedragsregel.id }}</td>#}
+                    <td>{{ gedragsregel.regels }}</td>
+                    <td> {{ include('gedragsregels/_delete_form.html.twig') }}</td>
+                    <td>
+                        <button type="button" class="btn btn-success"><a style="text-decoration: none; color: white"
+                                                                         href="{{ path('gedragsregels_show', {'id': gedragsregel.id}) }}">show</a>
+                        </button>
+                        <button type="button" class="btn btn-warning"><a style="text-decoration: none; color: white"
+                                                                         href="{{ path('gedragsregels_edit', {'id': gedragsregel.id}) }}">edit</a>
+                        </button>
+                        {#                    <a href="{{ path('gedragsregels_show', {'id': gedragsregel.id}) }}">show</a>#}
+                        {#                    <a href="{{ path('gedragsregels_edit', {'id': gedragsregel.id}) }}">edit</a>#}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-info"><a style="text-decoration: none; color: white"
+                                                      href="{{ path('gedragsregels_new') }}">Create new</a></button>
+
+        {#    <a href="{{ path('gedragsregels_new') }}">Create new</a>#}
+    </div>
+{% endblock %}

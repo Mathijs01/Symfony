@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+                                               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+{% block nav %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <img src="{{ asset('img/boksen_plaatje.jpg') }}" alt="plaatje" style="width: 300px">
+            </div>
+            <div class="col-sm">
+                <p style="font-family: 'Bauhaus 93'; font-size: 2.5rem; color: #AA3333">Training Centrum Den Haag</p>
+            </div>
+            <div class="col-sm">
+                {% if app.user %}
+                    <form class="p-2 ml-auto text-danger" style="text-align: right">
+                        <h4>Je bent ingelogt als: <br><br> - {{ app.user.username }} - <br><br></h4>
+                        <a type="button" class="btn btn-outline-danger" href="{{ logout_path('main') }}">Uitloggen</a>
+                    </form>
+                {% else %}
+                    <form class="p-2 ml-auto text-danger" style="text-align: right">
+                        <h4>U kunt hier klikken <br><br> om te inloggen</h4><br>
+                        <a type="button" href="/login" class="btn btn-outline-danger">Inloggen</a>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <hr style="background-color: #AA3333">
+
+    {% if is_granted('ROLE_ADMIN') %}
+    <div class="container" style="width: 80%">
+        <div class="row">
+            <div class="col-sm" style="text-decoration: none; color: #AA3333">
+                <a href="/home">Home</a>
+            </div>
+            <div class="col-sm">
+                <a href="/admin/training">Trainingen wijzigen</a>
+            </div>
+            <div class="col-sm">
+                <a href="/admin/gedrag">Gedragsregels wijzigen</a>
+            </div>
+        </div>
+    </div>
+    {% elseif is_granted('ROLE_USER') %}
+<div class="container" style="width: 80%">
+    <div class="row">
+        <div class="col-sm" style="text-decoration: none; color: #AA3333">
+            <a href="/home">Home</a>
+        </div>
+        <div class="col-sm">
+            <a href="#">Trainings Aanbod</a>
+        </div>
+        <div class="col-sm">
+            <a href="#">Lid Worden</a>
+        </div>
+        <div class="col-sm">
+            <a href="#">Gedragsregels</a>
+        </div>
+        <div class="col-sm">
+            <a href="#">Locatie & contact</a>
+        </div>
+    </div>
+    {% else %}
+        <div class="container" style="width: 80%">
+            <div class="row">
+                <div class="col-sm" style="text-decoration: none; color: #AA3333">
+                    <a href="/home">Home</a>
+                </div>
+                <div class="col-sm">
+                    <a href="/training">Trainings Aanbod</a>
+                </div>
+                <div class="col-sm">
+                    <a href="/inschrijven">Lid Worden</a>
+                </div>
+                <div class="col-sm">
+                    <a href="/regels">Gedragsregels</a>
+                </div>
+                <div class="col-sm">
+                    <a href="/contact">Locatie & contact</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% block header %}
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <img src="{{ asset('img/bokstraining1.jpg') }}" alt="plaatje" style="height: 300px;">
+                </div>
+                <div class="col-sm-4">
+                    <img src="{{ asset('img/kickboksen-training.jpg') }}" alt="plaatje" style="height: 300px;">
+                </div>
+                <div class="col-sm-4">
+                    <img src="{{ asset('img/MMA-training.jpg') }}" alt="plaatje" style="height: 300px;">
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block main %}{% endblock %}
+{% endblock %}
+
+{% block footer %}
+    <footer class="fixed-bottom" style="height: 100px; background-color: #34495e">
+        <h3 style="color: #AA3333; text-align: center; margin-top: 10px">Trainings Centrum Den Haag 010 519 0532</h3>
+        <p style="text-align: center; color: white; font-size: 12px; margin-top: 20px">Developed bij Mathijs</p>
+    </footer>
+{% endblock %}
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+{% endblock %}
+</body>
+</html>

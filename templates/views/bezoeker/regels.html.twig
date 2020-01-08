@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div style="text-align: center; font-size: x-large; font-family: 'Arial Black'" class="col">
+                {% for gedragsregels in regels %}
+                    {{ gedragsregels.regels }} <br>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
