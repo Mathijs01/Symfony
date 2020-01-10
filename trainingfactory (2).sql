@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 06 jan 2020 om 11:22
+-- Gegenereerd op: 10 jan 2020 om 13:01
 -- Serverversie: 10.4.8-MariaDB
 -- PHP-versie: 7.3.11
 
@@ -41,7 +41,7 @@ CREATE TABLE `gedragsregels` (
 
 INSERT INTO `gedragsregels` (`id`, `regels`) VALUES
 (1, 'gedraag je'),
-(2, 'test');
+(2, 'vecht niet');
 
 -- --------------------------------------------------------
 
@@ -75,8 +75,7 @@ CREATE TABLE `migration_versions` (
 --
 
 INSERT INTO `migration_versions` (`version`, `executed_at`) VALUES
-('20191216090423', '2019-12-16 09:04:32'),
-('20191218125655', '2019-12-18 12:57:10');
+('20200110103734', '2020-01-10 10:37:44');
 
 -- --------------------------------------------------------
 
@@ -134,9 +133,7 @@ CREATE TABLE `training` (
 --
 
 INSERT INTO `training` (`id`, `naam`, `description`, `duration`, `costs`) VALUES
-(12, 'Stootzak training', 'slaan op een stootzak', '01:30:00', '6.00'),
-(13, 'KickBoxen', 'training door middel van vechten', '01:30:00', '6.00'),
-(14, 'MMA', 'MMA vechten training', '01:30:00', '14.00');
+(1, 'MMA', 'lekker vechten', '02:00:00', '12.20');
 
 -- --------------------------------------------------------
 
@@ -154,12 +151,9 @@ CREATE TABLE `user` (
 -- Gegevens worden geëxporteerd voor tabel `user`
 --
 
-INSERT INTO `user` (`id`, `email`, `roles`, `password`, `firstname`) VALUES
-(1, 'admin@gmail.com', '[\"ROLE_ADMIN\"]', '$2y$13$Bw596OHTKwRsDwS5atQV5etjhCz9BniTHPsiPZhIVpl26kc61aUXe', 'tester1'),
-(2, 'user@gmail.com', '[\"ROLE_USER\"]', '$2y$13$dfEIyZTXf.KG7wSAbgKKD.eO9I9lIbF/4PaPHv4UZ1HAzYDACsUeW', 'tester2'),
-(3, 'tester3@gmail.com', '[\"ROLE_USER\"]', '$2y$13$X08KqIKsT/pq0hxgg6h92.JZUqbez7WpT8.Hktbrni/ONHQ6/.iJ2', 'tester3'),
-(4, 'tester4@gmail.com', '[\"ROLE_USER\"]', '$2y$13$HywySTylGCiceuWpwjwXzOBdsHRGP/O46rd7GojunSM6y5coc5V1W', 'tester4'),
-(5, 'tester5@gmail.com', '[\"ROLE_USER\"]', 'ja', 'tester5');
+INSERT INTO `user` (`id`, `email`, `roles`, `password`, `firstname`, `preprovision`, `lastname`, `gender`, `loginname`) VALUES
+(1, 'mathijs@gmail.com', '[\"ROLE_ADMIN\"]', '123', 'Mathijs', 'van', 'Rijthoven', 'man', 'Mathijs'),
+(2, 'cookie@gmail.com', '[]', '123', 'Cookie', 'van', 'Cookies', 'man', 'Cookie');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -237,7 +231,7 @@ ALTER TABLE `registration`
 -- AUTO_INCREMENT voor een tabel `training`
 --
 ALTER TABLE `training`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT voor een tabel `user`
