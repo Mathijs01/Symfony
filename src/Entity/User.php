@@ -38,6 +38,26 @@ class User implements UserInterface
      */
     private $firstname;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Preprovision;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Lastname;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Gender;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Loginname;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -124,6 +144,54 @@ class User implements UserInterface
     public function setFirstname(string $firstname): self
     {
         $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getPreprovision(): ?string
+    {
+        return $this->Preprovision;
+    }
+
+    public function setPreprovision(string $Preprovision): self
+    {
+        $this->Preprovision = $Preprovision;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->Lastname;
+    }
+
+    public function setLastname(string $Lastname): self
+    {
+        $this->Lastname = $Lastname;
+
+        return $this;
+    }
+
+    public function getGender(): ?string
+    {
+        return $this->Gender;
+    }
+
+    public function setGender(string $Gender): self
+    {
+        $this->Gender = $Gender;
+
+        return $this;
+    }
+
+    public function getLoginname(): ?string
+    {
+        return $this->Loginname;
+    }
+
+    public function setLoginname(string $Loginname): self
+    {
+        $this->Loginname = $Loginname;
 
         return $this;
     }
