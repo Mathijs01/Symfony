@@ -7,7 +7,7 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-                                               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
 {% block nav %}
@@ -37,38 +37,56 @@
     <hr style="background-color: #AA3333">
 
     {% if is_granted('ROLE_ADMIN') %}
-    <div class="container" style="width: 80%">
-        <div class="row">
-            <div class="col-sm" style="text-decoration: none; color: #AA3333">
-                <a href="/home">Home</a>
-            </div>
-            <div class="col-sm">
-                <a href="/admin/training">Trainingen wijzigen</a>
-            </div>
-            <div class="col-sm">
-                <a href="/admin/gedrag">Gedragsregels wijzigen</a>
+        <div class="container" style="width: 80%">
+            <div class="row">
+                <div class="col-sm" style="text-decoration: none; color: #AA3333">
+                    <a href="/home">Home</a>
+                </div>
+                <div class="col-sm">
+                    <a href="/training">Trainingen</a>
+                </div>
+                <div class="col-sm">
+                    <a href="/admin/gedrag">Gedragsregels wijzigen</a>
+                </div>
             </div>
         </div>
-    </div>
+    {% elseif is_granted("ROLE_INSTRUCTOR") %}
+        <div class="container" style="width: 80%">
+            <div class="row">
+                <div class="col-sm" style="text-decoration: none; color: #AA3333">
+                    <a href="/home">Home</a>
+                </div>
+                <div class="col-sm">
+                    <a href="/instructor/training">Trainingen toevoegen</a>
+                </div>
+                <div class="col-sm">
+                    <a href="/instructor/lesson">lessen toevoegen</a>
+                </div>
+                <div class="col-sm">
+                    <a href="/regels">Gedragsregels</a>
+                </div>
+            </div>
+        </div>
     {% elseif is_granted('ROLE_USER') %}
-<div class="container" style="width: 80%">
-    <div class="row">
-        <div class="col-sm" style="text-decoration: none; color: #AA3333">
-            <a href="/home">Home</a>
+        <div class="container" style="width: 80%">
+            <div class="row">
+                <div class="col-sm" style="text-decoration: none; color: #AA3333">
+                    <a href="/home">Home</a>
+                </div>
+                <div class="col-sm">
+                    <a href="/training">Trainings Aanbod</a>
+                </div>
+                <div class="col-sm">
+                    <a href="#">training inschrijven</a>
+                </div>
+                <div class="col-sm">
+                    <a href="/regels">Gedragsregels</a>
+                </div>
+                <div class="col-sm">
+                    <a href="contact">Locatie & contact</a>
+                </div>
+            </div>
         </div>
-        <div class="col-sm">
-            <a href="/training">Trainings Aanbod</a>
-        </div>
-        <div class="col-sm">
-            <a href="#">training inschrijven</a>
-        </div>
-        <div class="col-sm">
-            <a href="/regels">Gedragsregels</a>
-        </div>
-        <div class="col-sm">
-            <a href="contact">Locatie & contact</a>
-        </div>
-    </div>
     {% else %}
         <div class="container" style="width: 80%">
             <div class="row">
@@ -77,6 +95,8 @@
                 </div>
                 <div class="col-sm">
                     <a href="/training">Trainings Aanbod</a>
+                </div><div class="col-sm">
+                    <a href="/lesson">Lessen Aanbod</a>
                 </div>
                 <div class="col-sm">
                     <a href="/user/new">Lid Worden</a>
@@ -114,7 +134,8 @@
 
 {% block footer %}
     <footer class="fixed-bottom" style="height: 100px; background-color: #34495e">
-        <h3 style="color: #AA3333; text-align: center; margin-top: 10px">Trainings Centrum Den Haag 010 519 0532</h3>
+        <h3 style="color: #AA3333; text-align: center; margin-top: 10px">Trainings Centrum Den Haag 010 519
+            0532</h3>
         <p style="text-align: center; color: white; font-size: 12px; margin-top: 20px">Developed bij Mathijs</p>
     </footer>
 {% endblock %}

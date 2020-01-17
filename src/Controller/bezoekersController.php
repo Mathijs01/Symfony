@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\GedragsregelsRepository;
+use App\Repository\LessonRepository;
 use App\Repository\TrainingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,6 +49,15 @@ class bezoekersController extends AbstractController
     {
         return $this->render('views/bezoeker/training.html.twig', [
             'trainings' => $trainingRepository->findAll(),
+        ]);
+    }
+    /**
+     * @Route ("/lesson", name="lessenpage")
+     */
+    public function lessenpage(LessonRepository $LessonRepository):Response
+    {
+        return $this->render('views/bezoeker/lessen.html.twig', [
+            'lessen' => $LessonRepository->findAll(),
         ]);
     }
     /**

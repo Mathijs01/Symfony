@@ -45,7 +45,7 @@ class Lesson
     private $instructor_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\training", inversedBy="lessons")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Training", inversedBy="lessons")
      */
     private $training_id;
 
@@ -105,7 +105,7 @@ class Lesson
         return $this->max_persons;
     }
 
-    public function setMaxPersons(Integer $max_persons): self
+    public function setMaxPersons(int $max_persons): self
     {
         $this->max_persons = $max_persons;
 
