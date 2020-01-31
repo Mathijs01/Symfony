@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <br>
+    <h1 style="color: red">Overzicht inschrijven</h1>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Training</th>
+            <th>Tijd</th>
+            <th>Max-personen</th>
+            <th>prijs</th>
+            <th>Uitschrijven</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for registration in registrations %}
+            {% if registration.user.id == app.user.id %}
+                <tr>
+                    <td>{{ registration.lesson.training.naam }}</td>
+                    <td>{{ registration.lesson.time|date('H:i') }}</td>
+                    <td>{{ registration.lesson.registrations|length }}/{{ registration.lesson.maxpersons }}</td>
+                    <td>€{{ registration.payment }}</td>
+                    <td>{{ include('views/leden/_delete_form.html.twig') }}</td>
+                </tr>
+            {% else %}
+                <td><p>Je bent nog nergens ingeschreven</p></td>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

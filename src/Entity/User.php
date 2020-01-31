@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -23,9 +25,9 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="string", length=255, unique=true)
      */
-    private $roles = [];
+    private $loginname;
 
     /**
      * @var string The hashed password
@@ -39,28 +41,198 @@ class User implements UserInterface
     private $firstname;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $Preprovision;
+    private $preprovision;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Lastname;
+    private $lastname;
+
+    /**
+     * @ORM\Column(type="date", length=255)
+     */
+    private $dateofbirth;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Gender;
+    private $gender;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $Loginname;
+    private $hiring_date;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $salary;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $street;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $postal_code;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $place;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Lesson", mappedBy="instructeur")
+     */
+    private $lessons;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Registration", mappedBy="user")
+     */
+    private $registrations;
+
+    public function __construct()
+    {
+        $this->lessons = new ArrayCollection();
+        $this->registrations = new ArrayCollection();
+    }
+
+
+
+
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getLoginname(): ?string
+    {
+        return $this->loginname;
+    }
+
+    public function setLoginname(string $loginname): self
+    {
+        $this->loginname = $loginname;
+
+        return $this;
+    }
+
+    public function getPreprovision(): ?string
+    {
+        return $this->preprovision;
+    }
+
+    public function setPreprovision(string $preprovision): self
+    {
+        $this->preprovision = $preprovision;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getDateofbirth(): ?\DateTime
+    {
+        return $this->dateofbirth;
+    }
+
+    public function setDateofbirth(?\DateTime $dateofbirth): self
+    {
+        $this->dateofbirth = $dateofbirth;
+
+        return $this;
+    }
+
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    public function setGender(string $gender): self
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    public function getHiringDate(): ?string
+    {
+        return $this->hiring_date;
+    }
+
+    public function setHiringDate(string $hiring_date): self
+    {
+        $this->hiring_date = $hiring_date;
+
+        return $this;
+    }
+
+    public function getSalary(): ?string
+    {
+        return $this->salary;
+    }
+
+    public function setSalary(string $salary): self
+    {
+        $this->salary = $salary;
+
+        return $this;
+    }
+
+    public function getStreet(): ?string
+    {
+        return $this->street;
+    }
+
+    public function setStreet(string $street): self
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    public function getPostalCode(): ?string
+    {
+        return $this->postal_code;
+    }
+
+    public function setPostalCode(?string $postal_code): self
+    {
+        $this->postal_code = $postal_code;
+
+        return $this;
+    }
+
+    public function getPlace(): ?string
+    {
+        return $this->place;
+    }
+
+    public function setPlace(?string $place): self
+    {
+        $this->place = $place;
+
+        return $this;
     }
 
     public function getEmail(): ?string
@@ -82,7 +254,13 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->loginname;
+    }
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -148,50 +326,64 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getPreprovision(): ?string
+    /**
+     * @return Collection|Lesson[]
+     */
+    public function getLessons(): Collection
     {
-        return $this->Preprovision;
+        return $this->lessons;
     }
 
-    public function setPreprovision(string $Preprovision): self
+    public function addLesson(Lesson $lesson): self
     {
-        $this->Preprovision = $Preprovision;
+        if (!$this->lessons->contains($lesson)) {
+            $this->lessons[] = $lesson;
+            $lesson->setInstructeur($this);
+        }
 
         return $this;
     }
 
-    public function getLastname(): ?string
+    public function removeLesson(Lesson $lesson): self
     {
-        return $this->Lastname;
-    }
-
-    public function setLastname(string $Lastname): self
-    {
-        $this->Lastname = $Lastname;
+        if ($this->lessons->contains($lesson)) {
+            $this->lessons->removeElement($lesson);
+            // set the owning side to null (unless already changed)
+            if ($lesson->getInstructeur() === $this) {
+                $lesson->setInstructeur(null);
+            }
+        }
 
         return $this;
     }
 
-    public function getGender(): ?string
+    /**
+     * @return Collection|Registration[]
+     */
+    public function getRegistrations(): Collection
     {
-        return $this->Gender;
+        return $this->registrations;
     }
 
-    public function setGender(string $Gender): self
+    public function addRegistration(Registration $registration): self
     {
-        $this->Gender = $Gender;
+        if (!$this->registrations->contains($registration)) {
+            $this->registrations[] = $registration;
+            $registration->setUser($this);
+        }
 
         return $this;
     }
 
-    public function getLoginname(): ?string
+    public function removeRegistration(Registration $registration): self
     {
-        return $this->Loginname;
-    }
-
-    public function setLoginname(string $Loginname): self
-    {
-        $this->Loginname = $Loginname;
+        if ($this->registrations->contains($registration)) {
+            $this->registrations->removeElement($registration);
+            // set the owning side to null (unless already changed)
+            if ($registration->getUser() === $this) {
+                $registration->setUser(null);
+            }
+        }
 
         return $this;
     }

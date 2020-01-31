@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LessonRepository")
@@ -35,22 +34,22 @@ class Lesson
     private $location;
 
     /**
-     * @ORM\Column(type="integer", length=255)
+     * @ORM\Column(type="integer")
      */
     private $max_persons;
 
     /**
-     * @ORM\ManyToOne(targetEntity="person", inversedBy="lessons")
+     * @ORM\ManyToOne(targetEntity="training", inversedBy="lessons")
      */
-    private $instructor_id;
+    private $training;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Training", inversedBy="lessons")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="lessons")
      */
-    private $training_id;
+    private $instructeur;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Registration", mappedBy="lesson_id")
+     * @ORM\OneToMany(targetEntity="App\Entity\Registration", mappedBy="lesson")
      */
     private $registrations;
 
@@ -112,26 +111,26 @@ class Lesson
         return $this;
     }
 
-    public function getInstructorId(): ?person
+    public function getTraining(): ?training
     {
-        return $this->instructor_id;
+        return $this->training;
     }
 
-    public function setInstructorId(?person $instructor_id): self
+    public function setTraining(?training $training): self
     {
-        $this->instructor_id = $instructor_id;
+        $this->training = $training;
 
         return $this;
     }
 
-    public function getTrainingId(): ?training
+    public function getInstructeur(): ?user
     {
-        return $this->training_id;
+        return $this->instructeur;
     }
 
-    public function setTrainingId(?training $training_id): self
+    public function setInstructeur(?user $instructeur): self
     {
-        $this->training_id = $training_id;
+        $this->instructeur = $instructeur;
 
         return $this;
     }
@@ -148,7 +147,7 @@ class Lesson
     {
         if (!$this->registrations->contains($registration)) {
             $this->registrations[] = $registration;
-            $registration->setLessonId($this);
+            $registration->setLesson($this);
         }
 
         return $this;
@@ -159,11 +158,15 @@ class Lesson
         if ($this->registrations->contains($registration)) {
             $this->registrations->removeElement($registration);
             // set the owning side to null (unless already changed)
-            if ($registration->getLessonId() === $this) {
-                $registration->setLessonId(null);
+            if ($registration->getLesson() === $this) {
+                $registration->setLesson(null);
             }
         }
 
         return $this;
     }
+
+
+
+
 }

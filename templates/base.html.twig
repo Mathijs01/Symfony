@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html>
-
-
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
@@ -35,81 +33,62 @@
         </div>
     </div>
     <hr style="background-color: #AA3333">
-
-    {% if is_granted('ROLE_ADMIN') %}
-        <div class="container" style="width: 80%">
-            <div class="row">
-                <div class="col-sm" style="text-decoration: none; color: #AA3333">
-                    <a href="/home">Home</a>
-                </div>
-                <div class="col-sm">
-                    <a href="/training">Trainingen</a>
-                </div>
-                <div class="col-sm">
-                    <a href="/admin/gedrag">Gedragsregels wijzigen</a>
-                </div>
-            </div>
-        </div>
-    {% elseif is_granted("ROLE_INSTRUCTOR") %}
-        <div class="container" style="width: 80%">
-            <div class="row">
-                <div class="col-sm" style="text-decoration: none; color: #AA3333">
-                    <a href="/home">Home</a>
-                </div>
-                <div class="col-sm">
-                    <a href="/instructor/training">Trainingen toevoegen</a>
-                </div>
-                <div class="col-sm">
-                    <a href="/instructor/lesson">lessen toevoegen</a>
-                </div>
-                <div class="col-sm">
-                    <a href="/regels">Gedragsregels</a>
-                </div>
-            </div>
-        </div>
-    {% elseif is_granted('ROLE_USER') %}
-        <div class="container" style="width: 80%">
-            <div class="row">
-                <div class="col-sm" style="text-decoration: none; color: #AA3333">
-                    <a href="/home">Home</a>
-                </div>
-                <div class="col-sm">
-                    <a href="/training">Trainings Aanbod</a>
-                </div>
-                <div class="col-sm">
-                    <a href="#">training inschrijven</a>
-                </div>
-                <div class="col-sm">
-                    <a href="/regels">Gedragsregels</a>
-                </div>
-                <div class="col-sm">
-                    <a href="contact">Locatie & contact</a>
-                </div>
-            </div>
-        </div>
-    {% else %}
-        <div class="container" style="width: 80%">
-            <div class="row">
-                <div class="col-sm" style="text-decoration: none; color: #AA3333">
-                    <a href="/home">Home</a>
-                </div>
-                <div class="col-sm">
-                    <a href="/training">Trainings Aanbod</a>
-                </div><div class="col-sm">
-                    <a href="/lesson">Lessen Aanbod</a>
-                </div>
-                <div class="col-sm">
-                    <a href="/user/new">Lid Worden</a>
-                </div>
-                <div class="col-sm">
-                    <a href="/regels">Gedragsregels</a>
-                </div>
-                <div class="col-sm">
-                    <a href="/contact">Locatie & contact</a>
-                </div>
-            </div>
-        </div>
-    {% endif %}
+    <ul class="nav justify-content-center">
+        {% if is_granted('ROLE_ADMIN') %}
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/gedrag">gedragsregels</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/user/gegevens-wijzigen">Leden</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin/training">Training</a>
+            </li>
+        {% elseif is_granted("ROLE_INSTRUCTOR") %}
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/instructor/lesson/plannen">Plannen lessen</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/instructor/lesson/overzicht">Lessen beheer</a>
+            </li>
+        {% elseif is_granted('ROLE_USER') %}
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/user/lesson/overzicht">Inschrijven op les</a>
+            </li>
+{#            <li class="nav-item">#}
+{#                <a class="nav-link" href="#">Overzicht inschrijvingen</a>#}
+{#            </li>#}
+            <li class="nav-item">
+                <a class="nav-link" href="/user/2/edit">Gegevens lid wijzigen</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/trainings-aanbod">Trainings Aanbod</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/lid-worden">Lid Worden</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/gedragsregels">Gedragsregels</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/contact">Lokatie & Contact</a>
+            </li>
+        {% endif %}
+    </ul>
+    <hr style="background-color: #AA3333">
 {% endblock %}
 
 {% block body %}
@@ -128,12 +107,16 @@
             </div>
         </div>
     {% endblock %}
-
-    {% block main %}{% endblock %}
+    <div class="container">
+        {% block main %}{% endblock %}
+    </div>
 {% endblock %}
 
 {% block footer %}
-    <footer class="fixed-bottom" style="height: 100px; background-color: #34495e">
+   <div class="space">
+       <p style="color: white; margin-top: 200px">p</p>
+   </div>
+    <footer class="fixed-bottom " style="height: 100px; background-color: #34495e">
         <h3 style="color: #AA3333; text-align: center; margin-top: 10px">Trainings Centrum Den Haag 010 519
             0532</h3>
         <p style="text-align: center; color: white; font-size: 12px; margin-top: 20px">Developed bij Mathijs</p>

@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class bezoekersController extends AbstractController
 {
     /**
- * @Route("/home", name="homepagina")
+ * @Route("/", name="homepagina")
  */
     public function homepage()
     {
@@ -20,9 +20,37 @@ class bezoekersController extends AbstractController
     }
 
     /**
+     * @Route ("/trainings-aanbod", name="trainingpage")
+     */
+    public function trainingAanbod(TrainingRepository $trainingRepository):Response
+    {
+        return $this->render('views/bezoeker/training.html.twig', [
+            'trainings' => $trainingRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/lid-worden", name="inschrijfpagina")
+     */
+    public function lidWorden()
+    {
+        return $this->render("views/bezoeker/inschrijven.html.twig");
+    }
+
+    /**
+     * @Route("/gedragsregels", name="gedragregelspagina")
+     */
+    public function rulespage(GedragsregelsRepository $GedragsregelsRepository):Response
+    {
+        return $this->render('views/bezoeker/regels.html.twig', [
+            'regels' => $GedragsregelsRepository->findAll(),
+        ]);
+    }
+
+    /**
      * @Route("/contact", name="contactpagina")
      */
-    public function contactpage()
+    public function contact()
     {
         return $this->render("views/bezoeker/contact.html.twig");
     }
@@ -35,22 +63,8 @@ class bezoekersController extends AbstractController
 //        return $this->render("views/bezoeker/training.html.twig");
 //    }
 
-    /**
-     * @Route("/inschrijven", name="inschrijfpagina")
-     */
-    public function inschrijfpage()
-    {
-        return $this->render("views/bezoeker/inschrijven.html.twig");
-    }
-    /**
-     * @Route ("/training", name="trainingpage")
-     */
-    public function trainingpage(TrainingRepository $trainingRepository):Response
-    {
-        return $this->render('views/bezoeker/training.html.twig', [
-            'trainings' => $trainingRepository->findAll(),
-        ]);
-    }
+
+
     /**
      * @Route ("/lesson", name="lessenpage")
      */
@@ -60,13 +74,6 @@ class bezoekersController extends AbstractController
             'lessen' => $LessonRepository->findAll(),
         ]);
     }
-    /**
-     * @Route("/regels", name="gedragregelspagina")
-     */
-    public function rulespage(GedragsregelsRepository $GedragsregelsRepository):Response
-    {
-        return $this->render('views/bezoeker/regels.html.twig', [
-            'regels' => $GedragsregelsRepository->findAll(),
-        ]);
-    }
+
+
 }

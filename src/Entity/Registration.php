@@ -17,60 +17,58 @@ class Registration
     private $id;
 
     /**
-     * @ORM\Column(type="smallint", nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $payment;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\lesson", inversedBy="registrations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="registrations")
      */
-    private $lesson_id;
+    private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="person", inversedBy="registrations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\lesson", inversedBy="registrations")
      */
-    private $person_id;
-
+    private $lesson;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getPayment(): ?int
+    public function getPayment(): ?string
     {
         return $this->payment;
     }
 
-    public function setPayment(?int $payment): self
+    public function setPayment(string $payment): self
     {
         $this->payment = $payment;
 
         return $this;
     }
 
-    public function getLessonId(): ?lesson
+    public function getUser(): ?user
     {
-        return $this->lesson_id;
+        return $this->user;
     }
 
-    public function setLessonId(?lesson $lesson_id): self
+    public function setUser(?user $user): self
     {
-        $this->lesson_id = $lesson_id;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getPersonId(): ?person
+    public function getLesson(): ?lesson
     {
-        return $this->person_id;
+        return $this->lesson;
     }
 
-    public function setPersonId(?person $person_id): self
+    public function setLesson(?lesson $lesson): self
     {
-        $this->person_id = $person_id;
+        $this->lesson = $lesson;
 
         return $this;
     }
-
 }

@@ -1,0 +1,5 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <a class="btn btn-success d-inline" href="{{ path('lesson_overzicht') }}">back to list</a>
+    <button class="btn btn-warning d-inline">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

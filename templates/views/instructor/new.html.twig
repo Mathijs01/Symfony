@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Lesson{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <h1>Plan nieuwe les</h1>
+
+        {{ include('views/instructor/_form.html.twig') }}
+
+    </div>
+{% endblock %}

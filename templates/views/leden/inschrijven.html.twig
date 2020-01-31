@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <h2 class="text-danger mt-3 mb-3 ml-5"> Inschrijven op les</h2>
+
+    <div class="d-flex flex-wrap p-1" style="background: #ebebeb; font-size: 1.1rem">
+        {% for i in 1..13 %}
+            <a class="is-active js-schedule-date btn btn-warning m-1"
+               style="list-style-type: none;"
+               href="{{ path('user_lessen_overzicht', {date:date("now")|date_modify("+#{i} day")|date("d-m-Y")}) }}"> {{ date("now")|date_modify("+#{i} day")|date("D d M") }}
+            </a>
+        {% endfor %}
+    </div>
+    <br>
+    <div class="row">
+        {% for lesson in lessons %}
+            <div class="col-sm-6">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Training</th>
+                        <th>Tijd</th>
+                        <th>Max-personen</th>
+                        <th>Inschrijven</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ lesson.training }}</td>
+                        <td>{{ lesson.time ? lesson.time|date('H:i') : '' }}</td>
+                        <td>{{ lesson.registrations|length }}/{{ lesson.maxpersons }}</td>
+                        <td>
+                            {% set ingeschreven = false %}
+                            {% for registration in lesson.registrations %}
+                                {% if registration.user.id == app.user.id %}
+                                    <form class="d-inline" method="post"
+                                          action="{{ path('app_uitschrijven', {'id': registration.id}) }}"
+                                          onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token"
+                                               value="{{ csrf_token('delete' ~ registration.id) }}">
+                                        <style>
+                                            form button:hover .ingeschreven {
+                                                display: none;
+                                            }
+
+                                            form button:hover .uitschrijven {
+                                                display: block !important;
+                                            }
+                                        </style>
+                                        <button style="width: 120px;" class="btn btn-outline-danger">
+                                            <span class="ingeschreven">Ingeschreven</span>
+                                            <span class="uitschrijven d-none">Uitschrijven</span>
+                                        </button>
+                                    </form>
+                                    {% set ingeschreven = true %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if lesson.registrations|length >= lesson.maxpersons and ingeschreven == false %}
+                                <p style="width: 120px;" class="btn btn-danger">Vol</p>
+                            {% elseif ingeschreven == false %}
+                                <a class="btn btn-outline-success"
+                                   href="{{ path('app_nu_inschrijvingen', {'id': lesson.id}) }}">Inschrijven</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
